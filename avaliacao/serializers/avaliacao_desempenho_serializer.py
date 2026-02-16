@@ -11,4 +11,4 @@ class AvaliacaoDesempenhoSerializer(serializers.ModelSerializer):
     class Meta:
         model = AvaliacaoDesempenho
         fields = "__all__"
-        read_only_fields = ["id"]
+        read_only_fields = ["id", "status_avaliacao", "nota"]
