@@ -1,5 +1,5 @@
 from auditlog.registry import auditlog
-from django.db import models
+from django.db import models, transaction
 
 from colaborador.models import Colaborador
 
@@ -53,25 +53,30 @@ class AvaliacaoDesempenho(models.Model):
         super().save(*args, **kwargs)
 
         if nova_avaliacao:
-            tipos = TipoItemAvaliacaoDesempenho.objects.all()
-            for tipo in tipos:
-                ItemAvaliacaoDesempenho.objects.create(
-                    avaliacao=self,
-                    tipo_item_avaliacao_desempenho=tipo,
-                    nota=1,
-                )
+            with transaction.atomic():
+                tipos = TipoItemAvaliacaoDesempenho.objects.all()
+                itens_para_criar = [
+                    ItemAvaliacaoDesempenho(
+                        avaliacao=self,
+                        tipo_item_avaliacao_desempenho=tipo,
+                        nota=1,
+                    )
+                    for tipo in tipos
+                ]
+                ItemAvaliacaoDesempenho.objects.bulk_create(itens_para_criar)
 
     def atualizar_nota(self):
         """
         (soma das notas dos itens) / (total de tipos de itens * 5) * 100
         """
-        itens = self.itens.all()
-        total_tipos = TipoItemAvaliacaoDesempenho.objects.count()
+        with transaction.atomic():
+            itens = self.itens.all()
+            total_tipos = TipoItemAvaliacaoDesempenho.objects.count()
 
-        if total_tipos > 0:
-            soma_notas = sum(item.nota for item in itens)
-            self.nota = (soma_notas / (total_tipos * 5)) * 100
-            self.save()
+            if total_tipos > 0:
+                soma_notas = sum(item.nota for item in itens)
+                self.nota = (soma_notas / (total_tipos * 5)) * 100
+                self.save(update_fields=["nota"])
 
     def iniciar(self):
         """
