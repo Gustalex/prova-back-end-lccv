@@ -1,9 +1,16 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from ..models import AvaliacaoDesempenho, StatusAvaliacao
-from ..serializers import AvaliacaoDesempenhoSerializer
+from ..serializers import (
+    AtualizarNotaSerializer,
+    AvaliacaoDesempenhoSerializer,
+    ConcluirAvaliacaoSerializer,
+    DarFeedbackSerializer,
+    IniciarAvaliacaoSerializer,
+)
 
 
 class AvaliacaoDesempenhoViewset(viewsets.ModelViewSet):
@@ -15,58 +22,74 @@ class AvaliacaoDesempenhoViewset(viewsets.ModelViewSet):
     serializer_class = AvaliacaoDesempenhoSerializer
     http_method_names = ["get", "post", "patch"]
 
-    @action(detail=True, methods=["POST"], url_path="transicao-status")
-    def mudar_status_transicao_avaliacao(self, request, pk=None):
-        """
-        Muda o status da AvaliacaoDesempenho de acordo com a transição definida na máquina de estados.
+    def get_serializer_class(self):
+        """Retorna o serializer apropriado para cada action."""
+        if self.action == "iniciar_avaliacao":
+            return IniciarAvaliacaoSerializer
+        if self.action == "dar_feedback_avaliacao":
+            return DarFeedbackSerializer
+        if self.action == "concluir_avaliacao":
+            return ConcluirAvaliacaoSerializer
+        if self.action == "atualizar_nota":
+            return AtualizarNotaSerializer
+        return super().get_serializer_class()
 
-        Body: {"action": "iniciar" | "dar_feedback" | "concluir"}
+    def perform_update(self, serializer):
+        """
+        Sobrescreve o método de atualizar para checar o status da avaliação antes de permitir a edição.
         """
         avaliacao = self.get_object()
-        acao = request.data.get("action")
+        serializer.save()
 
-        if not acao:
-            return Response(
-                {"error": "Campo 'action' é obrigatório."},
-                status=status.HTTP_400_BAD_REQUEST,
+        status_permitidos = [
+            StatusAvaliacao.EM_ELABORACAO,
+            StatusAvaliacao.EM_AVALIACAO,
+        ]
+        if avaliacao.status_avaliacao not in status_permitidos:
+            raise ValidationError(
+                f"Não é possível atualizar uma avaliação com status '{avaliacao.status_avaliacao}'."
             )
 
-        transicoes = {
-            StatusAvaliacao.CRIADA: {
-                "iniciar": (avaliacao.iniciar, "Avaliação iniciada"),
-            },
-            StatusAvaliacao.EM_ELABORACAO: {
-                "dar_feedback": (avaliacao.dar_feedback, "Feedback registrado"),
-            },
-            StatusAvaliacao.EM_AVALIACAO: {
-                "concluir": (avaliacao.concluir, "Avaliação concluída"),
-            },
-        }
-
-        if avaliacao.status_avaliacao not in transicoes:
-            return Response(
-                {
-                    "error": f"Status '{avaliacao.status_avaliacao}' não permite mudanças de status."
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        acoes_validas = transicoes[avaliacao.status_avaliacao]
-
-        if acao not in acoes_validas:
-            return Response(
-                {
-                    "error": f"Ação inválida. Status atual: '{avaliacao.status_avaliacao}'."
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        metodo, mensagem = acoes_validas[acao]
-        metodo()
+    @action(detail=True, methods=["POST"], url_path="iniciar-avaliacao")
+    def iniciar_avaliacao(self, request, pk=None):
+        """
+        Inicia uma avaliação desempenho.
+        """
+        avaliacao = self.get_object()
+        avaliacao.iniciar()
 
         serializer = self.get_serializer(avaliacao)
         return Response(
-            {"message": mensagem, "data": serializer.data}, status=status.HTTP_200_OK
+            {"message": "Avaliação iniciada com sucesso", "data": serializer.data},
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=True, methods=["POST"], url_path="dar-feedback")
+    def dar_feedback_avaliacao(self, request, pk=None):
+        """
+        Registra o feedback do supervisor e muda o status para Em avaliação.
+        """
+        avaliacao = self.get_object()
+        avaliacao.dar_feedback()
+
+        serializer = self.get_serializer(avaliacao)
+        return Response(
+            {"message": "Feedback registrado com sucesso", "data": serializer.data},
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=True, methods=["POST"], url_path="concluir-avaliacao")
+    def concluir_avaliacao(self, request, pk=None):
+        """
+        Conclui uma avaliação desempenho.
+        """
+        avaliacao = self.get_object()
+        avaliacao.concluir()
+
+        serializer = self.get_serializer(avaliacao)
+        return Response(
+            {"message": "Avaliação concluída com sucesso", "data": serializer.data},
+            status=status.HTTP_200_OK,
         )
 
     @action(detail=True, methods=["POST"], url_path="atualizar-nota")
@@ -75,6 +98,13 @@ class AvaliacaoDesempenhoViewset(viewsets.ModelViewSet):
         Recalcula a nota da avaliação baseado nas notas dos itens.
         """
         avaliacao = self.get_object()
+
+        status_permitidos = [StatusAvaliacao.EM_ELABORACAO]
+        if avaliacao.status_avaliacao not in status_permitidos:
+            raise ValidationError(
+                f"Não é possível atualizar uma avaliação com status '{avaliacao.status_avaliacao}'."
+            )
+
         avaliacao.atualizar_nota()
 
         serializer = self.get_serializer(avaliacao)
