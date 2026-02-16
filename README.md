@@ -12,7 +12,7 @@
     - make console (permite a execução de comando do python dentro do container)
     - make hard-rebuild (faz uma limpeza profunda do docker e rebuilda o projeto)
 
-## Como rodar o projeto
+## COMO RODAR O PROJETO
 ### Com o .env já configurado 
 - **Buildar o projeto** 
   ```
@@ -36,4 +36,5 @@
     - Fazer o login com as credenciais cadastradas e testar via formulários
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
