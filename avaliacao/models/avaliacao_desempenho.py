@@ -3,7 +3,9 @@ from django.db import models
 
 from colaborador.models import Colaborador
 
+from .item_avaliacao_desempenho import ItemAvaliacaoDesempenho
 from .status_avaliacao import StatusAvaliacao
+from .tipo_item_avaliacao_desempenho import TipoItemAvaliacaoDesempenho
 
 
 class AvaliacaoDesempenho(models.Model):
@@ -42,6 +44,58 @@ class AvaliacaoDesempenho(models.Model):
 
     def __str__(self):
         return f"Avaliação de {self.colaborador} - {self.mes_competencia.strftime('%m/%Y')} - Status: {self.status_avaliacao}"
+
+    def save(self, *args, **kwargs):
+        """
+        Sobrescreve o método save para criar os itens de avaliação quando uma nova avaliação é criada.
+        """
+        nova_avaliacao = self.pk is None
+        super().save(*args, **kwargs)
+
+        if nova_avaliacao:
+            tipos = TipoItemAvaliacaoDesempenho.objects.all()
+            for tipo in tipos:
+                ItemAvaliacaoDesempenho.objects.create(
+                    avaliacao=self,
+                    tipo_item_avaliacao_desempenho=tipo,
+                    nota=1,
+                )
+
+    def atualizar_nota(self):
+        """
+        (soma das notas dos itens) / (total de tipos de itens * 5) * 100
+        """
+        itens = self.itens.all()
+        total_tipos = TipoItemAvaliacaoDesempenho.objects.count()
+
+        if total_tipos > 0:
+            soma_notas = sum(item.nota for item in itens)
+            self.nota = (soma_notas / (total_tipos * 5)) * 100
+            self.save()
+
+    def iniciar(self):
+        """
+        Inicia a avaliação, mudando o status para Em elaboração.
+        """
+        if self.status_avaliacao == StatusAvaliacao.CRIADA:
+            self.status_avaliacao = StatusAvaliacao.EM_ELABORACAO
+            self.save()
+
+    def dar_feedback(self):
+        """
+        Atualiza o status da avaliacao iniciada para Em avaliação.
+        """
+        if self.status_avaliacao == StatusAvaliacao.EM_ELABORACAO:
+            self.status_avaliacao = StatusAvaliacao.EM_AVALIACAO
+            self.save()
+
+    def concluir(self):
+        """
+        Conclui a avaliação, mudando o status para Concluída.
+        """
+        if self.status_avaliacao == StatusAvaliacao.EM_AVALIACAO:
+            self.status_avaliacao = StatusAvaliacao.CONCLUIDA
+            self.save()
 
 
 auditlog.register(AvaliacaoDesempenho)
