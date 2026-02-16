@@ -3,7 +3,6 @@ from django.db import models, transaction
 
 from colaborador.models import Colaborador
 
-from .item_avaliacao_desempenho import ItemAvaliacaoDesempenho
 from .status_avaliacao import StatusAvaliacao
 from .tipo_item_avaliacao_desempenho import TipoItemAvaliacaoDesempenho
 
@@ -53,6 +52,8 @@ class AvaliacaoDesempenho(models.Model):
         super().save(*args, **kwargs)
 
         if nova_avaliacao:
+            from .item_avaliacao_desempenho import ItemAvaliacaoDesempenho
+
             with transaction.atomic():
                 tipos = TipoItemAvaliacaoDesempenho.objects.all()
                 itens_para_criar = [
