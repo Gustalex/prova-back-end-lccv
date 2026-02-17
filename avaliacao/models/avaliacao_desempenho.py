@@ -3,11 +3,12 @@ from django.db import models, transaction
 
 from colaborador.models import Colaborador
 
+from .abstract_base_model import AbstractBaseModel
 from .status_avaliacao import StatusAvaliacao
 from .tipo_item_avaliacao_desempenho import TipoItemAvaliacaoDesempenho
 
 
-class AvaliacaoDesempenho(models.Model):
+class AvaliacaoDesempenho(AbstractBaseModel):
     """
     Modelo para avaliacao de desempenho dos colaboradores
 

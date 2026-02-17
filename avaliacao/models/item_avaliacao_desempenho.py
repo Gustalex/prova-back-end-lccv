@@ -2,11 +2,12 @@ from auditlog.registry import auditlog
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from .abstract_base_model import AbstractBaseModel
 from .avaliacao_desempenho import AvaliacaoDesempenho
 from .tipo_item_avaliacao_desempenho import TipoItemAvaliacaoDesempenho
 
 
-class ItemAvaliacaoDesempenho(models.Model):
+class ItemAvaliacaoDesempenho(AbstractBaseModel):
     """
     Modelo para representar os itens de avaliacão de desempenho que estão relacionados a um tipo de item de avaliação de desempenho.
     """

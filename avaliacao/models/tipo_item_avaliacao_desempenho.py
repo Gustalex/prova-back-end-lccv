@@ -1,10 +1,11 @@
 from auditlog.registry import auditlog
 from django.db import models
 
+from .abstract_base_model import AbstractBaseModel
 from .dimensao_item_avaliacao import DimensaoItemAvaliacao
 
 
-class TipoItemAvaliacaoDesempenho(models.Model):
+class TipoItemAvaliacaoDesempenho(AbstractBaseModel):
     """
     Modelo para representar os tipos de itens de avaliação de desempenho, como comportamento, entregas e trabalho em equipe.
     """
