@@ -1,9 +1,6 @@
 from .avaliacao_desempenho_serializer import (
-    AtualizarNotaSerializer,
     AvaliacaoDesempenhoSerializer,
-    ConcluirAvaliacaoSerializer,
-    DarFeedbackSerializer,
-    IniciarAvaliacaoSerializer,
+    EmptyActionSerializer,
 )
 from .item_avaliacao_desempenho_serializer import ItemAvaliacaoDesempenhoSerializer
 from .tipo_item_avaliacao_desempenho_serializer import (
@@ -12,10 +9,7 @@ from .tipo_item_avaliacao_desempenho_serializer import (
 
 __all__ = [
     "AvaliacaoDesempenhoSerializer",
-    "IniciarAvaliacaoSerializer",
-    "DarFeedbackSerializer",
-    "ConcluirAvaliacaoSerializer",
-    "AtualizarNotaSerializer",
+    "EmptyActionSerializer",
     "ItemAvaliacaoDesempenhoSerializer",
     "TipoItemAvaliacaoDesempenhoSerializer",
 ]
