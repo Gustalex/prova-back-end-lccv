@@ -35,6 +35,8 @@
       ```
     - Fazer o login com as credenciais cadastradas e testar via formulários
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
+    - É possivel fazer alterações em ItemAvaliacaoDesempenho dentro da página do modelo de AvaliacaoDesempenho através dos fomularios inline
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
 
