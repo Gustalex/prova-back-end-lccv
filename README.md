@@ -7,10 +7,24 @@
 ### Introdução sobre o Makefile
 
 - O projeto dispõe de um Makefile que facilita o desenvolvimento existindo 3 comandos :
-    - make build (builda o projeto subindo os containers docker da api e do banco)
-    - make run (roda os containers)
-    - make console (permite a execução de comando do python dentro do container)
-    - make hard-rebuild (faz uma limpeza profunda do docker e rebuilda o projeto)
+    - Buildar o projeto subindo os containers docker da api e do banco
+      ```
+      make build
+      ```
+    - Rodar os containers
+      ```
+      make run
+      ```
+    - Permitir a execução de comando do python dentro do container
+      ```
+      make console
+      ```
+      
+    - Fazer uma limpeza profunda do docker e rebuilda o projeto
+      ```
+      make hard-rebuild
+      ```
+       
 
 ## COMO RODAR O PROJETO
 ### Com o .env já configurado 
@@ -37,6 +51,7 @@
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
     - É possivel fazer alterações em ItemAvaliacaoDesempenho dentro da página do modelo de AvaliacaoDesempenho através dos fomularios inline
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
 
 
