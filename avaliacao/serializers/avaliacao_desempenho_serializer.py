@@ -14,41 +14,11 @@ class AvaliacaoDesempenhoSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "status_avaliacao", "nota"]
 
 
-class IniciarAvaliacaoSerializer(serializers.Serializer):
+class EmptyActionSerializer(serializers.Serializer):
     """
-    Serializer vazio para iniciar avaliação.
+    Serializer vazio para actions que não requerem campos no body.
 
-    Este endpoint não requer nenhum campo no body.
-    """
-
-    pass
-
-
-class DarFeedbackSerializer(serializers.Serializer):
-    """
-    Serializer vazio para registrar feedback.
-
-    Este endpoint não requer nenhum campo no body.
-    """
-
-    pass
-
-
-class ConcluirAvaliacaoSerializer(serializers.Serializer):
-    """
-    Serializer vazio para concluir avaliação.
-
-    Este endpoint não requer nenhum campo no body.
-    """
-
-    pass
-
-
-class AtualizarNotaSerializer(serializers.Serializer):
-    """
-    Serializer vazio para atualizar nota da avaliação.
-
-    Este endpoint não requer nenhum campo no body.
+    Usado para melhorar a documentação do Swagger.
     """
 
     pass
