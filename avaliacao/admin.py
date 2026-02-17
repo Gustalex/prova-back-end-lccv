@@ -104,6 +104,18 @@ class AvaliacaoDesempenhoAdmin(admin.ModelAdmin):
 
     readonly_fields = ("status_avaliacao", "nota")
 
+    def save_formset(self, request, form, formset, change):
+        """
+        Atualiza a nota da avaliação após salvar os itens inline.
+        """
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.save()
+        formset.save_m2m()
+
+        if change and formset.model == ItemAvaliacaoDesempenho:
+            form.instance.atualizar_nota()
+
     @admin.action(description="Iniciar avaliação")
     def action_iniciar(self, request, queryset):
         """Inicia avaliações em massa."""
