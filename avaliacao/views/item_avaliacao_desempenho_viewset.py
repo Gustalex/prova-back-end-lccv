@@ -20,7 +20,7 @@ class ItemAvaliacaoDesempenhoViewset(
         "avaliacao__colaborador",
     ).all()
     serializer_class = ItemAvaliacaoDesempenhoSerializer
-    http_method_names = ["get", "patch"]
+    http_method_names = ["get", "patch", "post"]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = [
         "avaliacao__colaborador__nome",

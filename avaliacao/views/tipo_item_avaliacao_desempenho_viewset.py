@@ -11,7 +11,7 @@ class TipoItemAvaliacaoDesempenhoViewset(viewsets.ModelViewSet):
 
     queryset = TipoItemAvaliacaoDesempenho.objects.all()
     serializer_class = TipoItemAvaliacaoDesempenhoSerializer
-    http_method_names = ["get", "post", "patch", "delete"]
+    http_method_names = ["get", "post", "patch"]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["tipo_item_avaliacao_desempenho", "descricao"]
     ordering_fields = ["dimensao", "tipo_item_avaliacao_desempenho", "created_at"]

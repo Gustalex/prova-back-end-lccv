@@ -22,7 +22,7 @@ class AvaliacaoDesempenhoViewset(ValidacaoStatusAvaliacaoMixin, viewsets.ModelVi
         "colaborador", "supervisor"
     ).all()
     serializer_class = AvaliacaoDesempenhoSerializer
-    http_method_names = ["get", "post", "patch", "delete"]
+    http_method_names = ["get", "post", "patch"]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = [
         "colaborador__nome",
