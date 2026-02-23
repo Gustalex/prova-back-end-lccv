@@ -2,10 +2,11 @@
 
 ### Introdução
 - São utilizadas algumas tecnologias integradas com o intuito de facilitar e melhorar as entregas e o ambiente de desenvolvimento, sejam elas:
-    - Flake8
-    - Makefile
-    - Docker
-    - Pre-commit
+    - Flake8 (Linter)
+    - Makefile (Execução de comandos de forma simplificada)
+    - Docker (Containerização)
+    - Pre-commit (Verificação de qualidade do código)
+    - Shell Script (Atumatização de tarefa)
 
 ### Configurar o  **.env**
 - O  arquivo .env.example já está disponibilizado no código e basta passar a configurção do banco postgres nos respectivos campos
@@ -58,6 +59,7 @@
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
     - É possivel fazer alterações em ItemAvaliacaoDesempenho dentro da página do modelo de AvaliacaoDesempenho através dos fomularios inline
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
 
 
