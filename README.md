@@ -7,6 +7,7 @@
     - Docker (Containerização)
     - Pre-commit (Verificação de qualidade do código)
     - Shell Script (Atumatização de tarefa)
+- Foi utilizado o banco de dados Postgres, containerizado, na versão 17-alpine, conforme está disponivel no arquivo de compose do docker.
 
 ### Configurar o  **.env**
 - O  arquivo .env.example já está disponibilizado no código e basta passar a configurção do banco postgres nos respectivos campos
@@ -59,6 +60,7 @@
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
     - É possivel fazer alterações em ItemAvaliacaoDesempenho dentro da página do modelo de AvaliacaoDesempenho através dos fomularios inline
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
 
 
