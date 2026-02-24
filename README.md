@@ -10,8 +10,7 @@
 - Foi utilizado o banco de dados Postgres, containerizado, na versão 17-alpine, conforme está disponivel no arquivo de compose do docker.
 
 ### Configurar o  **.env**
-- O  arquivo .env.example já está disponibilizado no código e basta passar a configurção do banco postgres nos respectivos campos
-
+- O  arquivo .env.example já está disponibilizado no código e basta passar a configurção do banco postgres nos respectivos campos.
 
 ### Introdução sobre o Makefile
 
@@ -41,12 +40,19 @@
   ```
   make build
   ```
+
+- **Rodar o projeto (caso não rode automaticamente** 
+  ```
+  make run
+  ```
 - **A documentação dos endpoints está disponível no swagger via url:** 
 
   ```
   http://localhost:8000/swagger
   ```
 
+- **Para acessar o banco pelo Dbeaver, ou outro gerenciador, antes de conectar atentar na configuração das portas do banco no docker-compose**
+  
 - **Para acessar os fomulários disponíveis no django admin:** 
     - Entrar no container para executar os comandos
       ```
@@ -60,6 +66,7 @@
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
     - É possivel fazer alterações em ItemAvaliacaoDesempenho dentro da página do modelo de AvaliacaoDesempenho através dos fomularios inline
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
 
 
