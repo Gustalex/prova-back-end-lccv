@@ -1,0 +1,46 @@
+[
+  {
+    "model": "avaliacao.tipoitemavaliacaodesempenho",
+    "pk": 1,
+    "fields": {
+        "dimensao": "COMPORTAMENTO",
+        "tipo_item_avaliacao_desempenho": "Pontualidade",
+        "descricao": "Avalia se o colaborador cumpre horários.",
+        "created_at": "2024-06-01T12:00:00Z",
+        "updated_at": "2024-06-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "avaliacao.tipoitemavaliacaodesempenho",
+    "pk": 2,
+    "fields": {
+        "dimensao": "ENTREGAS",
+        "tipo_item_avaliacao_desempenho": "Qualidade do Trabalho",
+        "descricao": "Avalia a qualidade das entregas realizadas.",
+        "created_at": "2024-06-01T12:00:00Z",
+        "updated_at": "2024-06-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "avaliacao.tipoitemavaliacaodesempenho",
+    "pk": 3,
+    "fields": {
+        "dimensao": "COMPORTAMENTO",
+        "tipo_item_avaliacao_desempenho": "Trabalho em Equipe",
+        "descricao": "Avalia a colaboração e interação com colegas.",
+        "created_at": "2024-06-01T12:00:00Z",
+        "updated_at": "2024-06-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "avaliacao.tipoitemavaliacaodesempenho",
+    "pk": 4,
+    "fields": {
+        "dimensao": "ENTREGAS",
+        "tipo_item_avaliacao_desempenho": "Cumprimento de Prazos",
+        "descricao": "Avalia se o colaborador entrega as tarefas no prazo.",
+        "created_at": "2024-06-01T12:00:00Z",
+        "updated_at": "2024-06-01T12:00:00Z"
+    }
+  }
+]

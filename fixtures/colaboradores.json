@@ -1,0 +1,24 @@
+[
+  {
+    "model": "colaborador.colaborador",
+    "pk": 1,
+    "fields": {
+        "nome": "João Papa-capim da Silva",
+        "cpf": "12345678901",
+        "email": "teste1@email.com",
+        "created_at": "2024-06-01T12:00:00Z",
+        "updated_at": "2024-06-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "colaborador.colaborador",
+    "pk": 2,
+    "fields": {
+        "nome": "Letycia Teixeira Vieira",
+        "cpf": "12345678902",
+        "email": "teste2@email.com",
+        "created_at": "2024-06-01T12:00:00Z",
+        "updated_at": "2024-06-01T12:00:00Z"
+    }
+  }
+]
