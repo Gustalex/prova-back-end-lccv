@@ -42,4 +42,3 @@ class ItemAvaliacaoDesempenhoViewset(
         self.validar_status_item_avaliacao(item, status_permitidos)
 
         item = serializer.save()
-        item.avaliacao.atualizar_nota()
