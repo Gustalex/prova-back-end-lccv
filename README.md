@@ -50,11 +50,21 @@
   ```
   http://localhost:8000/swagger
   ```
+- **Para popular o banco com dados base, para facilitar os testes**
+    - Para executar os comandos dentro do container
+      ```
+      make console
+      ```
+    - Apos executar o coomando anterior, executar esse:
+      ```
+      ./manage.py seed
+      ```
+    - Serão criados 2 Colaboradores e 4 Tipos de Item de Avaliação de Desempenho
 
 - **Para acessar o banco pelo Dbeaver, ou outro gerenciador, antes de conectar atentar na configuração das portas do banco no docker-compose**
   
 - **Para acessar os fomulários disponíveis no django admin:** 
-    - Entrar no container para executar os comandos
+    - Para executar os comandos dentro do container
       ```
       make console
       ```
@@ -66,6 +76,7 @@
     - É possivel Gerenciar Colaboradores, Avaliações e modelos relacionados
     - É possivel fazer alterações em ItemAvaliacaoDesempenho dentro da página do modelo de AvaliacaoDesempenho através dos fomularios inline
     - A testagem da mudança de status via django admin pode ser efetuada a partir do select de actions na pagina de gerenciamento de Avaliações de desempenho
+
 
 
 
